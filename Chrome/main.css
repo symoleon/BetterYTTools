@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+body, html {
+	width: 200px;
+	margin: 0;
+	font-size: 13px;
+	font-family: 'Lato', sans-serif;
+}
+main {
+	margin: auto;
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	background: #91c783;
+	color: white;
+}
+button {
+	width: 100%;
+	height: 40px;
+	grid-column: 1 / 3;
+	border: none;
+	background-color: #F26E60;
+	color: white;
+	font-size: 13px;
+}
+button:hover {
+	background-color: #ff8f82;
+}
+#color-button {
+	background: #91c783;
+}
+#color-button:hover, input[type="color"]:hover {
+	background: #abe69a;
+}
+label {
+	padding: 5px;
+}
+input[type="color"] {
+	width: 95%;
+	height: 100%;
+	border: none;
+	padding: 0 3px;
+	margin-right: 2px;
+	background: #91c783;
+}

@@ -33,22 +33,25 @@ resizeDialog = () => {
 }
 
 changeMarkerStyle = async (oldColor, color) => {
-	let styles = document.getElementsByTagName("style");
-	for(let i = 0; i < styles.length; i++) {
-		if(styles[i].getAttribute("scope") == "ytve-captions-marker") {
-			let oString = styles[i].innerHTML;
-			oString = oString.replace(/#touch-area.ytve-captions-marker\s*{\s*position:\s*absolute;\s*height:\s*100%;\s*width:\s*10px;\s*}/, "#touch-area.ytve-captions-marker{position:absolute;height:100%;width:2px;}");
-			string = oString.replace(/#touch-area.ytve-captions-marker\s*{\s*position:\s*absolute;\s*height:\s*100%;\s*width:\s*2px;\s*}/, "#touch-area.ytve-captions-marker{position:absolute;height:100%;width:10px;}");
-			oString = oString.replace(/#touch-area.ytve-captions-marker\s*{\s*position:\s*absolute;\s*left:\s*-11px;\s*}/, "#touch-area.ytve-captions-marker{position:absolute;left:-2px;}");
-			string = string.replace(/#touch-area.ytve-captions-marker\s*{\s*position:\s*absolute;\s*left:\s*-2px;\s*}/, "#touch-area.ytve-captions-marker{position:absolute;left:-11px;}");
-			let addStyle = ` ytve-captions-marker[marker-type="captions-left"] #touch-area.ytve-captions-marker, ytve-captions-marker[marker-type="captions-right"] #touch-area.ytve-captions-marker{background-color:${color};}`;
-			string += addStyle;
-			if(oString.search(`background-color:${oldColor};`) == -1 && oString.search(`background-color:${color};`) == -1 ) {
-				styles[i].innerHTML = string;
-			}else {
-				styles[i].innerHTML = oString.slice(0, oString.length - addStyle.length);
-			}
+	const head = document.head;
+	const styleNode = document.querySelector(".BetterYTTools") ?? document.createElement("style");
+	if (!styleNode.classList.contains("BetterYTTools")) {
+		styleNode.classList.add("BetterYTTools");
+	}
+	styleNode.textContent = `
+		#touch-area.ytve-captions-marker {
+			width: 10px;
 		}
+	 	ytve-captions-marker[marker-type="captions-left"] #touch-area.ytve-captions-marker, ytve-captions-marker[marker-type="captions-right"] #touch-area.ytve-captions-marker {
+			background-color: ${color};
+		}
+		ytve-captions-marker[marker-type="captions-right"] #touch-area.ytve-captions-marker {
+			left: -11px;
+		}
+	`;
+	if (head.contains(styleNode)) {
+		head.removeChild(styleNode);
+	} else {
+		head.appendChild(styleNode);
 	}
 }
-
